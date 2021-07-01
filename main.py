@@ -1,3 +1,4 @@
+import os
 from pyrogram import Client, filters
 from pytgcalls import PyTgCalls
 from pytgcalls_wrapper import Wrapper

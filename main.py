@@ -17,7 +17,7 @@ app = Client(
 )
 
 
-pytgcalls = PyTgCalls(client)
+pytgcalls = PyTgCalls(app)
 wrapper = Wrapper(pytgcalls, "raw")
 
 

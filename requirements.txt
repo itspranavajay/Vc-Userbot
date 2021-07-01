@@ -2,5 +2,6 @@ py-tgcalls-wrapper
 pyrogram==1.2.9
 tgcrypto
 youtube-dl
+tswift
 youtube_search
 requests

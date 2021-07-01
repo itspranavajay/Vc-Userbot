@@ -1,0 +1,44 @@
+{
+    "name": "hahaha",
+    "description": "wait",
+    "keywords": [
+        "telegram",
+        "voice"
+    ],
+    "repository": "https://github.com//Moezilla",
+    "success_url": "https://t.me/CosmicAuraSupport",
+    "stack": "container",
+    "env": {
+        "API_ID": {
+            "description": "Get this value from my.telegram.org!l",
+            "value": "",
+            "required": true
+        },
+        "API_HASH": {
+            "description": "Get this value from my.telegram.org!",
+            "value": "",
+            "required": true
+        },
+        "SESSION": {
+            "description": "session",
+            "value": "",
+            "required": true
+        },
+        "PREFIX": {
+            "description": "!",
+            "value": "!",
+            "required": false
+        },
+        "YT_URL": {
+            "description": "YouTube Url",
+            "value": "",
+            "required": true
+        }
+    },
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}

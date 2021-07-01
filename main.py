@@ -8,6 +8,7 @@ API_ID = os.environ.get("API_ID", None)
 API_HASH = os.environ.get("API_HASH", None) 
 SESSION = os.environ.get("SESSION", None) 
 PREFIX = os.environ.get("PREFIX", None) 
+YT_URL = os.environ.get("YT_URL", None)
 
 
 app = Client(
@@ -21,12 +22,15 @@ pytgcalls = PyTgCalls(app)
 wrapper = Wrapper(pytgcalls, "raw")
 
 
-@app.on_message(filters.me & filters.command("stream", PREFIX))
-async def stream(_, m):
-    await wrapper.stream(m.chat.id, URL)
+@app.on_message(filters.me & filters.command("play", PREFIX))
+async def stream(_, m, URL): 
+    await wrapper.stream(m.chat.id, {URL})
     await m.reply_text("Downloading song")
 
-
+@app.on_message(filters.me & filters.command("stream", PREFIX))
+async def stream(_, m): 
+    await wrapper.stream(m.chat.id, YT_URL)
+    await m.reply_text("Downloading song")
 
 
 @app.on_message(filters.me & filters.command("pause",PREFIX))

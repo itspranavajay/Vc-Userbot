@@ -22,11 +22,6 @@ pytgcalls = PyTgCalls(app)
 wrapper = Wrapper(pytgcalls, "raw")
 
 
-@app.on_message(filters.me & filters.command("play", PREFIX))
-async def stream(_, m, URL): 
-    await wrapper.stream(m.chat.id, {URL})
-    await m.reply_text("Downloading song")
-
 @app.on_message(filters.me & filters.command("stream", PREFIX))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)

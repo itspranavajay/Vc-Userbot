@@ -21,7 +21,7 @@ pytgcalls = PyTgCalls(client)
 wrapper = Wrapper(pytgcalls, "raw")
 
 
-@client.on_message(filters.me & filters.command("stream", PREFIX))
+@app.on_message(filters.me & filters.command("stream", PREFIX))
 async def stream(_, m):
     await wrapper.stream(m.chat.id, URL)
     await m.reply_text("Downloading song")
@@ -29,14 +29,14 @@ async def stream(_, m):
 
 
 
-@client.on_message(filters.me & filters.command("pause",PREFIX))
+@app.on_message(filters.me & filters.command("pause",PREFIX))
 async def pause(_, m):
     wrapper.pause(m.chat.id)
     await m.reply_text("Paused Song.")
 
 
 
-@client.on_message(filters.me & filters.command("resume", PREFIX))
+@app.on_message(filters.me & filters.command("resume", PREFIX))
 async def resume(_, m):
     wrapper.resume(m.chat.id)
     await m.reply_text("Resume Song.")

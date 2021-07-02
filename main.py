@@ -45,10 +45,10 @@ async def play_a_song(wrapper, message, song):
     try:
         await wrapper.stream(message.chat.id, song)
     except Exception as e:
-        await message.reply_text(f"ERROR:\n{e}")
+        await m.reply_text(f"ERROR:\n{e}")
 
 @app.on_message(filters.me & filters.command("play", PREFIX))
-async def play(_, message):
+async def play(_, m):
     txt = m.text.split(' ', 1)
     type_ = None
     try:

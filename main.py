@@ -47,7 +47,7 @@ async def play_a_song(pycalls, message, song):
     except Exception as e:
         await message.reply_text(f"ERROR:\n{e}")
 
-@app.on_message(filters.me & filters.command("stream", PREFIX))
+@app.on_message(filters.me & filters.command("play", PREFIX))
 async def play(_, message):
     txt = message.text.split(' ', 1)
     type_ = None

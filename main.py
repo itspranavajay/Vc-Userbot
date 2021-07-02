@@ -11,6 +11,7 @@ from youtube_search import YoutubeSearch
 import requests
 import time
 
+StartTime = time.time()
 
 
 API_ID = os.environ.get("API_ID", None) 
@@ -18,11 +19,6 @@ API_HASH = os.environ.get("API_HASH", None)
 SESSION = os.environ.get("SESSION", None) 
 PREFIX = os.environ.get("PREFIX", None) 
 YT_URL = os.environ.get("YT_URL", None)
-SUDO_USER = os.environ.get('SUDO_USER')
-SUDO_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
-GROUP_USER = os.environ.get('GROUP_USER')
-GROUP_USER = list(map(int, GROUP_USER.split(' '))) if GROUP_USER else []
-MOE_USER = SUDO_USER + GROUP_USER
 
 
 app = Client(
@@ -39,26 +35,26 @@ REPOLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
 License: [ GPL-3.0 License](https://github.com/moezilla/vc-userbot/blob/master/LICENSE.md)"""
 
 
-@app.on_message(filters.me & filters.command("stream", PREFIX) & filters.chat(MOE_USER))
+@app.on_message(filters.me & filters.command("stream", PREFIX))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)
     await m.reply_text("Playing song")
 
 
-@app.on_message(filters.me & filters.command("pause", PREFIX) & filters.chat(MOE_USER))
+@app.on_message(filters.me & filters.command("pause",PREFIX))
 async def pause(_, m):
     wrapper.pause(m.chat.id)
     await m.reply_text("Paused Song.")
 
 
 
-@app.on_message(filters.me & filters.command("resume", PREFIX) & filters.chat(MOE_USER))
+@app.on_message(filters.me & filters.command("resume", PREFIX))
 async def resume(_, m):
     wrapper.resume(m.chat.id)
     await m.reply_text("Resume Song.")
 
 
-@app.on_message(filters.me & filters.command("song", PREFIX) & filters.chat(MOE_USER))
+@app.on_message(filters.me & filters.command("song", PREFIX))
 def song(client, message):
     query = ''
     for i in message.command[1:]:
@@ -117,7 +113,37 @@ def song(client, message):
     except Exception as e:
         print(e)
 
-@app.on_message(filters.me & filters.command("repo", PREFIX) & filters.chat(MOE_USER))
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+    return ping_time
+
+
+@app.on_message(filters.me & filters.command("ping", PREFIX))
+async def ping(_, message):
+    start_time = time.time()
+    m = await message.reply_text("Ping")
+    end_time = time.time()
+    ping_time = round((end_time - start_time) * 1000, 3)
+    uptime = get_readable_time((time.time() - StartTime))
+    await m.edit_text(f"Ping - `{ping_time}ms`\nUptime - {uptime}", parse_mode='markdown')
+
+@app.on_message(filters.me & filters.command("repo", PREFIX))
 async def repo(_, message):
     await message.reply_text(REPOLINK)
 

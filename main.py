@@ -33,7 +33,7 @@ app = Client(
 pytgcalls = PyTgCalls(app)
 wrapper = Wrapper(pytgcalls, "raw")
 
-GITHUBLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
+REPOLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
 License: [ GPL-3.0 License](https://github.com/moezilla/vc-userbot/blob/master/LICENSE.md)"""
 
 
@@ -145,8 +145,8 @@ async def ping(_, message):
     uptime = get_readable_time((time.time() - StartTime))
     await m.edit_text(f"Ping - `{ping_time}ms`\nUptime - {uptime}", parse_mode='markdown')
 
-@app.on_message(filters.me & filters.command("github", PREFIX))
-async def github(_, message):
-    await message.reply_text(GITHUBLINK)
+@app.on_message(filters.me & filters.command("repo", PREFIX))
+async def repo(_, message):
+    await message.reply_text(REPOLINK)
 
 pytgcalls.run()

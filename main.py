@@ -41,7 +41,7 @@ class Text():
     not_yet = "`This is not yet supported!`"
     dl = "`Downloading...`"
     
-async def play_a_song(pycalls, message, song):
+async def play_a_song(wrapper, message, song):
     try:
         await wrapper.stream(message.chat.id, song)
     except Exception as e:

@@ -49,13 +49,13 @@ async def play_a_song(wrapper, message, song):
 
 @app.on_message(filters.me & filters.command("play", PREFIX))
 async def play(_, message):
-    txt = message.text.split(' ', 1)
+    txt = m.text.split(' ', 1)
     type_ = None
     try:
         song_name = txt[1]
         type_ = "url"
     except IndexError:
-        reply = message.reply_to_message
+        reply = m.reply_to_message
         if reply:
             if reply.audio:
                 med = reply.audio
@@ -64,22 +64,22 @@ async def play(_, message):
             elif reply.voice:
                 med = reply.voice
             else:
-                return await message.reply_text(Text.how_to)
+                return await m.reply_text(Text.how_to)
             song_name = med.file_name
             type_ = "tg"
     if type_ == "url":
         if "youtube" not in song_name and "youtu.be" not in song_name:
-            return await message.reply_text(Text.not_yet)
-        await message.reply_text("Playing `{}`".format(song_name))
+            return await m.reply_text(Text.not_yet)
+        await m.reply_text("Playing `{}`".format(song_name))
         await play_a_song(pycalls, message, song_name)
     elif type_ == "tg":
-        x = await message.reply_text(Text.dl)
+        x = await m.reply_text(Text.dl)
         file_ = await reply.download()
         await x.edit("`Play`")
-        await play_a_song(pycalls, message, file_)
+        await play_a_song(wrapper, message, file_)
         remove(file_)
     else:
-        return await message.reply_text(Text.how_to)
+        return await m.reply_text(Text.how_to)
 
 # ...................................................................................... 
 

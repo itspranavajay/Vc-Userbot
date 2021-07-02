@@ -20,8 +20,8 @@ PREFIX = os.environ.get("PREFIX", None)
 YT_URL = os.environ.get("YT_URL", None)
 SUDO_USER = os.environ.get('SUDO_USER')
 SUDO_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
-GROUP_USER = os.environ.get('SUDO_USER')
-GROUP_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
+GROUP_USER = os.environ.get('GROUP_USER')
+GROUP_USER = list(map(int, GROUP_USER.split(' '))) if GROUP_USERelse []
 MOE_USER = SUDO_USER + GROUP_USER
 
 

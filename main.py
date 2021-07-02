@@ -43,7 +43,7 @@ class Text():
     
 async def play_a_song(pycalls, message, song):
     try:
-        await pycalls.stream(message.chat.id, song)
+        await wrapper.stream(message.chat.id, song)
     except Exception as e:
         await message.reply_text(f"ERROR:\n{e}")
 

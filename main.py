@@ -189,7 +189,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@app.on_message(filters.me & filters.command("ping", PREFIX) & filters.user(MOE_USER))
+@app.on_message(filters.command('help', PREFIX) & filters.chat(MOE_USER))
 async def ping(_, message):
     start_time = time.time()
     m = await message.reply_text("Ping")

@@ -18,6 +18,7 @@ Telegram Mini Music Voice Chat Userbot
 
 ## cmd:   
 - `!ping` - bot ping cheak.   
+- `!stream` - Either give a youtube URL or reply to a telegram file to play it.
 - `!stream` - Play Song YT_URL.   
 - `!pause` - Pause the stream.   
 - `!resume` - Resume the stream.   
@@ -26,5 +27,6 @@ Telegram Mini Music Voice Chat Userbot
 - [pytgcalls](https://github.com/pytgcalls/pytgcalls)   
 - [pytgcalls-wrapper](https://github.com/callsmusic/pytgcalls-wrapper)   
 - [Pyrogram](https://github.com/pyrogram/pyrogram)   
-- [Me](https://github.com/moezilla)   
+- [Me](https://github.com/moezilla)
+- [xditya](https://github.com/xditya)  
 - [contributed](https://github.com/moezilla/vc-userbot/graphs/contributors).

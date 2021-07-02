@@ -37,7 +37,7 @@ wrapper = Wrapper(pytgcalls, "raw")
 @app.on_message(filters.me & filters.command("stream", PREFIX))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)
-    await m.reply_text("Downloading song")
+    await m.reply_text("Playing song")
 
 
 @app.on_message(filters.me & filters.command("pause",PREFIX))

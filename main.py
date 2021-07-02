@@ -19,6 +19,13 @@ API_HASH = os.environ.get("API_HASH", None)
 SESSION = os.environ.get("SESSION", None) 
 PREFIX = os.environ.get("PREFIX", None) 
 YT_URL = os.environ.get("YT_URL", None)
+SUDO_USER = os.environ.get('SUDO_USER')
+SUDO_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
+GROUP_USER = os.environ.get('GROUP_USER')
+GROUP_USER = list(map(int, GROUP_USER.split(' '))) if GROUP_USER else []
+MOE_USER = SUDO_USER + GROUP_USER
+
+
 
 
 app = Client(
@@ -47,7 +54,7 @@ async def play_a_song(wrapper, message, song):
     except Exception as e:
         await m.reply_text(f"ERROR:\n{e}")
 
-@app.on_message(filters.me & filters.command("play", PREFIX))
+@app.on_message(filters.me & filters.command("play", PREFIX) & filters.user(MOE_USER))
 async def play(_, m):
     txt = m.text.split(' ', 1)
     type_ = None
@@ -83,26 +90,26 @@ async def play(_, m):
 
 # ...................................................................................... 
 
-@app.on_message(filters.me & filters.command("stream", PREFIX))
+@app.on_message(filters.me & filters.command("stream", PREFIX) & filters.user(MOE_USER))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)
     await m.reply_text("Playing song")
 
 
-@app.on_message(filters.me & filters.command("pause",PREFIX))
+@app.on_message(filters.me & filters.command("pause", PREFIX) & filters.user(MOE_USER))
 async def pause(_, m):
     wrapper.pause(m.chat.id)
     await m.reply_text("Paused Song.")
 
 
 
-@app.on_message(filters.me & filters.command("resume", PREFIX))
+@app.on_message(filters.me & filters.command("resume", PREFIX) & filters.user(MOE_USER))
 async def resume(_, m):
     wrapper.resume(m.chat.id)
     await m.reply_text("Resume Song.")
 
 
-@app.on_message(filters.me & filters.command("song", PREFIX))
+@app.on_message(filters.me & filters.command("song", PREFIX) & filters.user(MOE_USER))
 def song(client, message):
     query = ''
     for i in message.command[1:]:
@@ -182,7 +189,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@app.on_message(filters.me & filters.command("ping", PREFIX))
+@app.on_message(filters.me & filters.command("ping", PREFIX) & filters.user(MOE_USER))
 async def ping(_, message):
     start_time = time.time()
     m = await message.reply_text("Ping")
@@ -191,7 +198,7 @@ async def ping(_, message):
     uptime = get_readable_time((time.time() - StartTime))
     await m.edit_text(f"Ping - `{ping_time}ms`\nUptime - {uptime}", parse_mode='markdown')
 
-@app.on_message(filters.me & filters.command("repo", PREFIX))
+@app.on_message(filters.me & filters.command("repo", PREFIX) & filters.user(MOE_USER))
 async def repo(_, message):
     await message.reply_text(REPOLINK)
 

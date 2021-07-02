@@ -76,7 +76,7 @@ async def play(_, m):
         x = await m.reply_text(Text.dl)
         file_ = await reply.download()
         await x.edit("`Play`")
-        await play_a_song(wrapper, message, file_)
+        await play_a_song(wrapper, m, file_)
         remove(file_)
     else:
         return await m.reply_text(Text.how_to)

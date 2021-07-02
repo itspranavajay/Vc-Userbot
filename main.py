@@ -34,6 +34,54 @@ wrapper = Wrapper(pytgcalls, "raw")
 REPOLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
 License: [ GPL-3.0 License](https://github.com/moezilla/vc-userbot/blob/master/LICENSE.md)"""
 
+# ......................................................................................................... 
+# credits xditya sir 😁😁😅
+class Text():
+    how_to = "`Either reply to an audio file or give me a youtube link to play from!`"
+    not_yet = "`This is not yet supported!`"
+    dl = "`Downloading...`"
+    
+async def play_a_song(pycalls, message, song):
+    try:
+        await pycalls.stream(message.chat.id, song)
+    except Exception as e:
+        await message.reply_text(f"ERROR:\n{e}")
+
+@app.on_message(filters.me & filters.command("stream", PREFIX))
+async def play(_, message):
+    txt = message.text.split(' ', 1)
+    type_ = None
+    try:
+        song_name = txt[1]
+        type_ = "url"
+    except IndexError:
+        reply = message.reply_to_message
+        if reply:
+            if reply.audio:
+                med = reply.audio
+            elif reply.video:
+                med = reply.video
+            elif reply.voice:
+                med = reply.voice
+            else:
+                return await message.reply_text(Text.how_to)
+            song_name = med.file_name
+            type_ = "tg"
+    if type_ == "url":
+        if "youtube" not in song_name and "youtu.be" not in song_name:
+            return await message.reply_text(Text.not_yet)
+        await message.reply_text("Playing `{}`".format(song_name))
+        await play_a_song(pycalls, message, song_name)
+    elif type_ == "tg":
+        x = await message.reply_text(Text.dl)
+        file_ = await reply.download()
+        await x.edit("`Play`")
+        await play_a_song(pycalls, message, file_)
+        remove(file_)
+    else:
+        return await message.reply_text(Text.how_to)
+
+# ...................................................................................... 
 
 @app.on_message(filters.me & filters.command("stream", PREFIX))
 async def stream(_, m): 

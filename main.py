@@ -21,6 +21,11 @@ API_HASH = os.environ.get("API_HASH", None)
 SESSION = os.environ.get("SESSION", None) 
 PREFIX = os.environ.get("PREFIX", None) 
 YT_URL = os.environ.get("YT_URL", None)
+ADMIN_USER = os.environ.get('SUDO_USER')
+ADMIN_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
+GROUP_USER = os.environ.get('SUDO_USER')
+GROUP_USER = list(map(int, SUDO_USER.split(' '))) if SUDO_USER else []
+MOE_USER = SUDO_USER + GROUP_USER
 
 
 app = Client(
@@ -37,26 +42,26 @@ REPOLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
 License: [ GPL-3.0 License](https://github.com/moezilla/vc-userbot/blob/master/LICENSE.md)"""
 
 
-@app.on_message(filters.me & filters.command("stream", PREFIX))
+@app.on_message(filters.me & filters.command("stream", PREFIX) & filters.chat(MOE_USER))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)
     await m.reply_text("Playing song")
 
 
-@app.on_message(filters.me & filters.command("pause",PREFIX))
+@app.on_message(filters.me & filters.command("pause", PREFIX) & filters.chat(MOE_USER))
 async def pause(_, m):
     wrapper.pause(m.chat.id)
     await m.reply_text("Paused Song.")
 
 
 
-@app.on_message(filters.me & filters.command("resume", PREFIX))
+@app.on_message(filters.me & filters.command("resume", PREFIX) & filters.chat(MOE_USER))
 async def resume(_, m):
     wrapper.resume(m.chat.id)
     await m.reply_text("Resume Song.")
 
 
-@app.on_message(filters.me & filters.command("song", PREFIX))
+@app.on_message(filters.me & filters.command("song", PREFIX) & filters.chat(MOE_USER))
 def song(client, message):
     query = ''
     for i in message.command[1:]:
@@ -136,7 +141,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@app.on_message(filters.me & filters.command("ping", PREFIX))
+@app.on_message(filters.me & filters.command("ping", PREFIX) & filters.chat(MOE_USER))
 async def ping(_, message):
     start_time = time.time()
     m = await message.reply_text("Ping")
@@ -145,7 +150,7 @@ async def ping(_, message):
     uptime = get_readable_time((time.time() - StartTime))
     await m.edit_text(f"Ping - `{ping_time}ms`\nUptime - {uptime}", parse_mode='markdown')
 
-@app.on_message(filters.me & filters.command("repo", PREFIX))
+@app.on_message(filters.me & filters.command("repo", PREFIX) & filters.chat(MOE_USER))
 async def repo(_, message):
     await message.reply_text(REPOLINK)
 

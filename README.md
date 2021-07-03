@@ -18,7 +18,7 @@ Telegram Mini Music Voice Chat Userbot
 
 ## cmd:   
 - `!ping` - bot ping cheak.   
-- `!stream` - Either give a youtube URL or reply to a telegram file to play it.
+- `!play` - Either give a youtube URL or reply to a telegram file to play it.
 - `!stream` - Play Song YT_URL.   
 - `!pause` - Pause the stream.   
 - `!resume` - Resume the stream.   

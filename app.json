@@ -25,8 +25,8 @@
             "required": true
         },
         "PREFIX": {
-            "description": "!",
-            "value": "!",
+            "description": ". ; ? !",
+            "value": ".",
             "required": false
         },
         "YT_URL": {

@@ -71,7 +71,7 @@ async def play(_, m):
         if "youtube" not in song_name and "youtu.be" not in song_name:
             return await m.reply_text(Text.not_yet)
         await m.reply_text("Playing `{}`".format(song_name))
-        await play_a_song(pycalls, message, song_name)
+        await play_a_song(pycalls, m, song_name)
     elif type_ == "tg":
         x = await m.reply_text(Text.dl)
         file_ = await reply.download()

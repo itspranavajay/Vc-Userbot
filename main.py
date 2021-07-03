@@ -47,7 +47,7 @@ async def play_a_song(wrapper, message, song):
     except Exception as e:
         await m.reply_text(f"ERROR:\n{e}")
 
-@app.on_message(filters.me & filters.command("play", PREFIX))
+@app.on_message(filters.command("play", PREFIX))
 async def play(_, m):
     txt = m.text.split(' ', 1)
     type_ = None
@@ -83,26 +83,26 @@ async def play(_, m):
 
 # ...................................................................................... 
 
-@app.on_message(filters.me & filters.command("stream", PREFIX))
+@app.on_message(filters.command("stream", PREFIX))
 async def stream(_, m): 
     await wrapper.stream(m.chat.id, YT_URL)
     await m.reply_text("Playing song")
 
 
-@app.on_message(filters.me & filters.command("pause",PREFIX))
+@app.on_message(filters.command("pause", PREFIX))
 async def pause(_, m):
     wrapper.pause(m.chat.id)
     await m.reply_text("Paused Song.")
 
 
 
-@app.on_message(filters.me & filters.command("resume", PREFIX))
+@app.on_message(filters.command("resume", PREFIX))
 async def resume(_, m):
     wrapper.resume(m.chat.id)
     await m.reply_text("Resume Song.")
 
 
-@app.on_message(filters.me & filters.command("song", PREFIX))
+@app.on_message(filters.command("song", PREFIX))
 def song(client, message):
     query = ''
     for i in message.command[1:]:
@@ -182,7 +182,7 @@ def get_readable_time(seconds: int) -> str:
     return ping_time
 
 
-@app.on_message(filters.me & filters.command("ping", PREFIX))
+@app.on_message(filters.command("ping", PREFIX))
 async def ping(_, message):
     start_time = time.time()
     m = await message.reply_text("Ping")
@@ -191,7 +191,7 @@ async def ping(_, message):
     uptime = get_readable_time((time.time() - StartTime))
     await m.edit_text(f"Ping - `{ping_time}ms`\nUptime - {uptime}", parse_mode='markdown')
 
-@app.on_message(filters.me & filters.command("repo", PREFIX))
+@app.on_message(filters.command("ping", PREFIX))
 async def repo(_, message):
     await message.reply_text(REPOLINK)
 

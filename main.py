@@ -43,7 +43,7 @@ class Text():
     
 async def play_a_song(wrapper, m, song):
     try:
-        await wrapper.stream(message.chat.id, song)
+        await wrapper.stream(m.chat.id, song)
     except Exception as e:
         await m.reply_text(f"ERROR:\n{e}")
 

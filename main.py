@@ -1,4 +1,5 @@
 import os
+from os import remove as song
 import io
 from tswift import Song
 from pyrogram import Client, filters
@@ -77,7 +78,7 @@ async def play(_, m):
         file_ = await reply.download()
         await x.edit("`Play`")
         await play_a_song(wrapper, m, file_)
-        os(file_)
+        song(file_)
     else:
         return await m.reply_text(Text.how_to)
 

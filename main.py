@@ -1,5 +1,4 @@
 import os
-from os import remove 
 import io
 from tswift import Song
 from pyrogram import Client, filters
@@ -35,54 +34,6 @@ wrapper = Wrapper(pytgcalls, "raw")
 REPOLINK = """ Source code: [Github](https://github.com/Moezilla/vc-userbot)
 License: [ GPL-3.0 License](https://github.com/moezilla/vc-userbot/blob/master/LICENSE.md)"""
 
-# ......................................................................................................... 
-# credits xditya sir 😁😁😅
-class Text():
-    how_to = "`Either reply to an audio file or give me a youtube link to play from!`"
-    not_yet = "`This is not yet supported!`"
-    dl = "`Downloading...`"
-    
-async def play_a_song(wrapper, m, song):
-    try:
-        await wrapper.stream(m.chat.id, song)
-    except Exception as e:
-        await m.reply_text(f"ERROR:\n{e}")
-
-@app.on_message(filters.command("play", PREFIX))
-async def play(_, m):
-    txt = m.text.split(' ', 1)
-    type_ = None
-    try:
-        song_name = txt[1]
-        type_ = "url"
-    except IndexError:
-        reply = m.reply_to_message
-        if reply:
-            if reply.audio:
-                med = reply.audio
-            elif reply.video:
-                med = reply.video
-            elif reply.voice:
-                med = reply.voice
-            else:
-                return await m.reply_text(Text.how_to)
-            song_name = med.file_name
-            type_ = "tg"
-    if type_ == "url":
-        if "youtube" not in song_name and "youtu.be" not in song_name:
-            return await m.reply_text(Text.not_yet)
-        await m.reply_text("Playing `{}`".format(song_name))
-        await play_a_song(pycalls, m, song_name)
-    elif type_ == "tg":
-        x = await m.reply_text(Text.dl)
-        file_ = await reply.download()
-        await x.edit("`Play`")
-        await play_a_song(wrapper, m, file_)
-        remove(file_)
-    else:
-        return await m.reply_text(Text.how_to)
-
-# ...................................................................................... 
 
 @app.on_message(filters.command("stream", PREFIX))
 async def stream(_, m): 

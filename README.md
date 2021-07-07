@@ -28,5 +28,4 @@ Telegram Mini Music Voice Chat Userbot
 - [pytgcalls-wrapper](https://github.com/callsmusic/pytgcalls-wrapper)   
 - [Pyrogram](https://github.com/pyrogram/pyrogram)   
 - [Me](https://github.com/moezilla)
-- [xditya](https://github.com/xditya)  
 - [contributed](https://github.com/moezilla/vc-userbot/graphs/contributors).

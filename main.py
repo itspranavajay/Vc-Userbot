@@ -56,16 +56,14 @@ async def resume(_, m):
 
 @app.on_message(filters.command("song", PREFIX))
 def song(client, message):
-    query = ''
-    for i in message.command[1:]:
-        query += ' ' + str(i)
+    query = ''.join(' ' + str(i) for i in message.command[1:])
     print(query)
     m = message.reply('Searching the song...')
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = []
         count = 0
-        while len(results) == 0 and count < 6:
+        while not results and count < 6:
             if count>0:
                 time.sleep(1)
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -89,7 +87,7 @@ def song(client, message):
         m.edit(
             "✖️ Found Nothing. Sorry.\n\nTry another keywork or maybe spell it properly."
         )
-        print(str(e))
+        print(e)
         return
     m.edit("⏬ Downloading.")
     try:
